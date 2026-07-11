@@ -4,6 +4,7 @@ import typer
 from huginn.collectors.subdomains import CrtShCollector, CrtShError
 from huginn.collectors.dns import DnsCollector
 from huginn.collectors.whois import WhoisCollector, WhoisError
+from huginn.collectors.emails import EmailCollector
 from huginn.core.models import ScanResult
 from huginn.output.json_writer import write_json
 
@@ -96,12 +97,35 @@ def whois(
 
 
 @app.command()
+def emails(
+    target: str = typer.Argument(..., help="Target domain, ex: example.com"),
+    output: Path = typer.Option(None, "--output", "-o", help="Output file path (JSON)")
+):
+    collector = EmailCollector()
+    findings = collector.collect(target)
+
+    result = ScanResult(
+        target=target,
+        started_at=datetime.now(timezone.utc).isoformat(),
+        findings=findings,
+    )
+
+    for f in findings:
+        typer.echo(f.value)
+    typer.echo(f"\n[+] {len(findings)} emails found for {target}")
+
+    if output:
+        write_json(result, output)
+        typer.echo(f"[+] saved results to {output}")
+
+
+@app.command()
 def scan(
     target: str = typer.Argument(..., help="Target domain, ex: example.com"),
     output: Path = typer.Option(None, "--output", "-o", help="Output file path (JSON)"),
 ):
     
-    collectors = [CrtShCollector(), DnsCollector(), WhoisCollector()]
+    collectors = [CrtShCollector(), DnsCollector(), WhoisCollector(), EmailCollector()]
     findings = []
 
     for collector in  collectors:

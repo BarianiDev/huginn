@@ -9,7 +9,7 @@ class WhoisError(Exception):
 class WhoisCollector(Collector):
     name = "whois"
     FIELDS = [
-        "register",
+        "registrar",
         "creation_date",
         "expiration_date",
         "updated_date",
