@@ -1,5 +1,7 @@
 # Huginn
 
+[![Tests](https://github.com/BarianiDev/huginn/actions/workflows/tests.yml/badge.svg)](https://github.com/BarianiDev/huginn/actions/workflows/tests.yml)
+
 Huginn is a passive OSINT / reconnaissance CLI tool for gathering publicly available information about a target domain — subdomains, DNS records, WHOIS data, exposed email addresses, detected technologies, and historical URLs from the Wayback Machine.
 
 Named after Huginn, one of Odin's two ravens ("thought"), who flies across the world and returns with information.
