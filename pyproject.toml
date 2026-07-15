@@ -1,0 +1,22 @@
+[project]
+name = "huginn"
+version = "0.1.0"
+description = "Passive OSINT recon CLI"
+requires-python = ">=3.10"
+dependencies = [
+    "httpx",
+    "typer",
+    "dnspython",
+    "python-whois",
+]
+
+[project.scripts]
+huginn = "huginn.cli:app"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["huginn*"]
+
